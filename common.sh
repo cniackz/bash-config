@@ -1668,7 +1668,7 @@ function installtenanthelm() {
     helm install \
       --namespace tenant-ns \
       --create-namespace tenant-ns \
-      /Users/cniackz/bash-config/config-files/helm/Tenant/helm-tenant-5.0.8
+      /Users/cniackz/bash-config/config-files/helm/Tenant/helm-tenant-5.0.9
 }
 
 
