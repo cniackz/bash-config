@@ -245,16 +245,41 @@ function createclusterhelp() {
     echo "                           "
     echo "                           "
     echo "###########################"
-    echo "createcluster nodeport"
-    echo "createcluster 8nodes"
-    echo "createcluster ingress"
-    echo "createcluster oldversion"
-    echo "createcluster myownip"
-    echo "createcluster base"
+    echo "1. createcluster nodeport"
+    echo "2. createcluster 8nodes"
+    echo "3. createcluster ingress"
+    echo "4. createcluster oldversion"
+    echo "5. createcluster myownip"
+    echo "6. createcluster base"
     echo "###########################"
     echo "                           "
     echo "                           "
     echo "                           "
+    read -p "Option #: " option
+    if [ "$option" == "1" ]
+    then
+        createclusternp
+    fi
+    if [ "$option" == "2" ]
+    then
+        createcluster8nodes
+    fi
+    if [ "$option" == "3" ]
+    then
+        createclusteringress
+    fi
+    if [ "$option" == "4" ]
+    then
+        createclusteroldversion
+    fi
+    if [ "$option" == "5" ]
+    then
+        createclustermyownip
+    fi
+    if [ "$option" == "6" ]
+    then
+        createclusterbase
+    fi
 }
 
 

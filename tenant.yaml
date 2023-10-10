@@ -4,42 +4,113 @@ items:
   kind: Tenant
   metadata:
     annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"minio.min.io/v2","kind":"Tenant","metadata":{"annotations":{"prometheus.io/path":"/minio/v2/metrics/cluster","prometheus.io/port":"9000","prometheus.io/scrape":"true"},"labels":{"app":"minio"},"name":"myminio","namespace":"tenant-certmanager"},"spec":{"certConfig":{},"configuration":{"name":"storage-configuration"},"env":[],"externalCaCertSecret":[],"externalCertSecret":[{"name":"tenant-certmanager-tls","type":"cert-manager.io/v1"}],"externalClientCertSecrets":[],"features":{"bucketDNS":false,"domains":{}},"image":"quay.io/minio/minio:RELEASE.2023-09-07T02-05-02Z","imagePullSecret":{},"mountPath":"/export","podManagementPolicy":"Parallel","pools":[{"affinity":{"nodeAffinity":{},"podAffinity":{},"podAntiAffinity":{}},"containerSecurityContext":{"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000},"name":"pool-0","nodeSelector":{},"resources":{},"securityContext":{"fsGroup":1000,"fsGroupChangePolicy":"OnRootMismatch","runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000},"servers":4,"tolerations":[],"topologySpreadConstraints":[],"volumeClaimTemplate":{"apiVersion":"v1","kind":"persistentvolumeclaims","metadata":{},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"1Ti"}},"storageClassName":"standard"},"status":{}},"volumesPerServer":4}],"priorityClassName":"","requestAutoCert":false,"serviceAccountName":"","serviceMetadata":{"consoleServiceAnnotations":{},"consoleServiceLabels":{},"minioServiceAnnotations":{},"minioServiceLabels":{}},"subPath":"","users":[{"name":"storage-user"}]}}
       prometheus.io/path: /minio/v2/metrics/cluster
       prometheus.io/port: "9000"
       prometheus.io/scrape: "true"
+    creationTimestamp: "2023-10-06T20:33:27Z"
+    generation: 1
     labels:
       app: minio
     name: myminio
-    namespace: tenant-lite
+    namespace: tenant-certmanager
+    resourceVersion: "6069"
+    uid: 94ec7ff8-43d8-4f99-82e1-a157b2cc7f45
   spec:
+    certConfig: {}
     configuration:
       name: storage-configuration
+    env: []
+    externalCaCertSecret: []
+    externalCertSecret:
+    - name: tenant-certmanager-tls
+      type: cert-manager.io/v1
+    externalClientCertSecrets: []
     features:
       bucketDNS: false
-    image: quay.io/minio/minio:RELEASE.2023-03-24T21-41-23Z
+      domains: {}
+    image: quay.io/minio/minio:RELEASE.2023-09-07T02-05-02Z
+    imagePullSecret: {}
     mountPath: /export
     podManagementPolicy: Parallel
     pools:
-    - name: pool-0
-      nodeSelector:
-        pool: zero
+    - affinity:
+        nodeAffinity: {}
+        podAffinity: {}
+        podAntiAffinity: {}
+      containerSecurityContext:
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      name: pool-0
+      nodeSelector: {}
+      resources: {}
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
       servers: 4
+      tolerations: []
+      topologySpreadConstraints: []
       volumeClaimTemplate:
-        metadata:
-          name: data
+        apiVersion: v1
+        kind: persistentvolumeclaims
+        metadata: {}
         spec:
           accessModes:
           - ReadWriteOnce
           resources:
             requests:
-              storage: 2Gi
-      volumesPerServer: 2
+              storage: 1Ti
+          storageClassName: standard
+        status: {}
+      volumesPerServer: 4
     priorityClassName: ""
-    requestAutoCert: true
+    requestAutoCert: false
     serviceAccountName: ""
+    serviceMetadata:
+      consoleServiceAnnotations: {}
+      consoleServiceLabels: {}
+      minioServiceAnnotations: {}
+      minioServiceLabels: {}
     subPath: ""
     users:
     - name: storage-user
+  status:
+    availableReplicas: 3
+    certificates:
+      autoCertEnabled: false
+      customCertificates:
+        minio:
+        - certName: tenant-certmanager-tls
+          domains:
+          - '*.tenant-certmanager.svc.cluster.local'
+          - '*.myminio.tenant-certmanager.svc.cluster.local'
+          - '*.myminio-hl.tenant-certmanager.svc.cluster.local'
+          expiresIn: 89 days, 23 hours, 38 minutes, 0 seconds
+          expiry: "2024-01-04T20:33:28Z"
+          serialNo: "300367151527417777407759212961904870481"
+    currentState: Initialized
+    drivesOffline: 8
+    drivesOnline: 8
+    healthMessage: Service Unavailable
+    healthStatus: red
+    pools:
+    - legacySecurityContext: false
+      ssName: myminio-pool-0
+      state: PoolInitialized
+    provisionedUsers: true
+    revision: 0
+    syncVersion: ""
+    usage:
+      capacity: 823282302976
+      rawCapacity: 17592186044416
+      rawUsage: 63991808000
+      usage: 127987810304
+    writeQuorum: 14
 kind: List
 metadata:
   resourceVersion: ""
