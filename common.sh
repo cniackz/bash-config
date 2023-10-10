@@ -1494,21 +1494,34 @@ function installtenant() {
 
 # To provide support on what methods can be used when installing the tenant.
 function installtenanthelp() {
-    echo "                           "
-    echo "                           "
-    echo "                           "
-    echo "** SUPPORTED METHODS:      "
-    echo "                           "
-    echo "                           "
-    echo "                           "
-    echo "###########################"
-    echo "installtenant nginx        "
-    echo "installtenant nodeport     "
-    echo "installtenant helm         "
-    echo "###########################"
-    echo "                           "
-    echo "                           "
-    echo "                           "
+    echo "                              "
+    echo "                              "
+    echo "                              "
+    echo "** SUPPORTED METHODS:         "
+    echo "                              "
+    echo "                              "
+    echo "                              "
+    echo "##############################"
+    echo "1. installtenant nginx        "
+    echo "2. installtenant nodeport     "
+    echo "3. installtenant helm         "
+    echo "##############################"
+    echo "                              "
+    echo "                              "
+    echo "                              "
+    read -p "Option #: " option
+    if [ "$option" == "1" ]
+    then
+        installtenantnginx
+    fi
+    if [ "$option" == "2" ]
+    then
+        installtenantnp
+    fi
+    if [ "$option" == "3" ]
+    then
+        installtenanthelm
+    fi
 }
 
 
