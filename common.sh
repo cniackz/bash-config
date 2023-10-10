@@ -956,22 +956,39 @@ function installoperator() {
 #
 ######################################
 function installoperatorhelp() {
-    echo "                           "
-    echo "                           "
-    echo "                           "
-    echo "** SUPPORTED METHODS:      "
-    echo "                           "
-    echo "                           "
-    echo "                           "
-    echo "###########################"
-    echo "installoperator nodeport   "
-    echo "installoperator ingress    "
-    echo "installoperator fromgithub "
-    echo "installoperator withhelm   "
-    echo "###########################"
-    echo "                           "
-    echo "                           "
-    echo "                           "
+    echo "                              "
+    echo "                              "
+    echo "                              "
+    echo "** SUPPORTED METHODS:         "
+    echo "                              "
+    echo "                              "
+    echo "                              "
+    echo "##############################"
+    echo "1. installoperator nodeport   "
+    echo "2. installoperator ingress    "
+    echo "3. installoperator fromgithub "
+    echo "4. installoperator withhelm   "
+    echo "##############################"
+    echo "                              "
+    echo "                              "
+    echo "                              "
+    read -p "Option #: " option
+    if [ "$option" == "1" ]
+    then
+        installoperatornp
+    fi
+    if [ "$option" == "2" ]
+    then
+        installoperatoringress
+    fi
+    if [ "$option" == "3" ]
+    then
+        installOperatorFromGitHub
+    fi
+    if [ "$option" == "4" ]
+    then
+        installoperatorhelm
+    fi
 }
 
 
@@ -1168,7 +1185,7 @@ function installoperatoringress() {
 # as documentation, so that we can use it when needed for demos with customers.
 function installOperatorFromGitHub() {
     # Make sure to use version or tag so that you don't have to compile against latest master code.
-    k apply -k github.com/minio/operator/resources/\?ref\=v5.0.8
+    k apply -k github.com/minio/operator/resources/\?ref\=v5.0.9
 }
 
 
@@ -1280,7 +1297,7 @@ function installoperatorhelm() {
     helm install \
          --namespace minio-operator \
          --create-namespace minio-operator \
-         /Users/cniackz/bash-config/config-files/helm/Operator/helm-operator-5.0.8
+         /Users/cniackz/bash-config/config-files/helm/Operator/helm-operator-5.0.9
 }
 
 
