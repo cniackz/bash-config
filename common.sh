@@ -36,6 +36,7 @@ export CONFIG_FILES=/Users/cniackz/bash-config/config-files
 alias ext=exit
 alias cls=clear
 alias k="kubectl"
+alias podman=docker
 alias gadd="git add"
 alias gst="git status"
 alias gpush="git push"
@@ -43,8 +44,8 @@ alias gdiff="git diff"
 alias gpull="git pull"
 alias wb1="git rev-parse --abbrev-ref HEAD"
 alias sshpg="ssh cesar@65.49.37.17 -p 4492"
+alias sshasus="ssh ccelis@72.140.145.27 -p 22"
 alias sshintel="ssh minio@64.71.151.78 -p 4492"
-alias podman=docker
 
 ######################################
 #
