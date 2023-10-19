@@ -10,11 +10,11 @@ metadata:
 spec:
   tls:
     - hosts:
-        - minio.tenant-lite.svc.cluster.local
+        - ingress.local
         - minio.tenant-lite
       secretName: myminio-tls
   rules:
-    - host: minio.tenant-lite.svc.cluster.local
+    - host: ingress.local
       http:
         paths:
           - path: /
