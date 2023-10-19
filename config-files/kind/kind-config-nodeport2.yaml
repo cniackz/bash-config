@@ -1,0 +1,37 @@
+kind: Cluster
+name: secondcluster
+apiVersion: kind.x-k8s.io/v1alpha4
+networking:
+  apiServerAddress: "127.0.0.1"
+  apiServerPort: 6444
+nodes:
+- role: control-plane
+  extraPortMappings:
+  - containerPort: 30085
+    hostPort: 30085
+    listenAddress: "127.0.0.1"
+    protocol: TCP
+- role: worker
+  extraPortMappings:
+  - containerPort: 30086
+    hostPort: 30086
+    listenAddress: "127.0.0.1"
+    protocol: TCP
+- role: worker
+  extraPortMappings:
+  - containerPort: 30087
+    hostPort: 30087
+    listenAddress: "127.0.0.1"
+    protocol: TCP
+- role: worker
+  extraPortMappings:
+  - containerPort: 30088
+    hostPort: 30088
+    listenAddress: "127.0.0.1"
+    protocol: TCP
+- role: worker
+  extraPortMappings:
+  - containerPort: 30089
+    hostPort: 30089
+    listenAddress: "127.0.0.1"
+    protocol: TCP
