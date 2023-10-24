@@ -755,7 +755,7 @@ function upgradetenant() {
 function upgradeoperator() {
 
     # Before:
-    helm list -n tenant-ns
+    helm list -n minio-operator
 
     # Upgrade:
     helm upgrade \
@@ -763,7 +763,7 @@ function upgradeoperator() {
          minio-operator /Users/cniackz/bash-config/config-files/helm/Operator/helm-operator-5.0.10
 
     # After:
-    helm list -n tenant-ns
+    helm list -n minio-operator
 
 }
 
