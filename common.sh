@@ -760,7 +760,7 @@ function upgradeoperator() {
     # Upgrade:
     helm upgrade \
          --namespace tenant-ns \
-         minio-operator /Users/cniackz/bash-config/config-files/helm/Operator/helm-operator-5.0.8
+         minio-operator /Users/cniackz/bash-config/config-files/helm/Operator/helm-operator-5.0.10
 
     # After:
     helm list -n tenant-ns
