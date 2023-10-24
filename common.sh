@@ -682,16 +682,12 @@ function crcRun() {
 
 function upgradetenant() {
 
-    METHOD=$1
-    VERSION=$2
-    NAMESPACE=$3
-
     echo "Current version:"
     helm list -n tenant-ns
     echo " "; echo " "; echo " ";
 
     echo "Upgrade:"
-    helm upgrade --namespace $NAMESPACE tenant-ns $CONFIG_FILES/helm/Tenant/tenant-$VERSION
+    helm upgrade --namespace tenant-ns tenant-ns /Users/cniackz/bash-config/config-files/helm/Tenant/helm-tenant-5.0.10
     echo " "; echo " "; echo " ";
 
     echo "New version:"
