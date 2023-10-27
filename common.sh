@@ -1609,7 +1609,7 @@ function installtenanthelp() {
 
 
 function installtenantkustomize() {
-    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-8.yaml
+    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-9.yaml
 }
 
 
