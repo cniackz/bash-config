@@ -104,7 +104,11 @@ function gcommit() {
 
 
 
-
+# To develop in Operator
+function nginxOperator() {
+    createcluster ingress
+    installoperator ingress
+}
 
 
 
