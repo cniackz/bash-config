@@ -1130,7 +1130,12 @@ function installoperatoringress() {
     # Install NGINX
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 
-    # Wait for NGINX to be ready
+    echo " "
+    echo " "
+    echo " "
+    echo "##########################"
+    echo "Wait for NGINX to be ready"
+    echo "##########################"
     kubectl wait --namespace ingress-nginx \
       --for=condition=ready pod \
       --selector=app.kubernetes.io/component=controller \
