@@ -1144,6 +1144,17 @@ function installoperatoringress() {
     # Add --enable-ssl-passthrough to enable passthrough in ingress-nginx deployment:
     k apply -f /Users/cniackz/bash-config/config-files/nginx
 
+    echo " "
+    echo " "
+    echo " "
+    echo "##########################"
+    echo "Wait for NGINX to be ready"
+    echo "##########################"
+    kubectl wait --namespace ingress-nginx \
+      --for=condition=ready pod \
+      --selector=app.kubernetes.io/component=controller \
+      --timeout=90s
+
     ############################################################################
     #
     # I Think we can expose it to nodeport as well, might be useful to have them
@@ -1151,6 +1162,17 @@ function installoperatoringress() {
     #
     ############################################################################
     installoperatornp
+
+    echo " "
+    echo " "
+    echo " "
+    echo "##########################"
+    echo "Wait for NGINX to be ready"
+    echo "##########################"
+    kubectl wait --namespace ingress-nginx \
+      --for=condition=ready pod \
+      --selector=app.kubernetes.io/component=controller \
+      --timeout=90s
 
     ############################################################################
     #
