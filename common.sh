@@ -109,6 +109,28 @@ function gcommit() {
 
 
 
+# To develop in Operator
+function nginxAll() {
+    createcluster ingress
+    installoperator ingress
+    installtenant nginx
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
