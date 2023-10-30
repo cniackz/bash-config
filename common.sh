@@ -1283,7 +1283,7 @@ function installOperatorFromGitHub() {
 # This function creates the Operator YAML
 # It requires fast network to work and the kustomize command.
 function createOperatorYAML() {
-    kustomize build github.com/minio/operator/resources/\?ref\=v5.0.9 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-9.yaml
+    kustomize build github.com/minio/operator/resources/\?ref\=v5.0.10 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-10.yaml
 }
 
 function createTenantYAML() {
@@ -1291,7 +1291,11 @@ function createTenantYAML() {
     # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite > tenant.yaml
     # From Tag:
     # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v5.0.8 > tenant.yaml
-    kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v5.0.9 > /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-9.yaml
+    kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v5.0.10 > /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-10.yaml
+}
+
+function createTenantYAMLCertManager() {
+    kustomize build github.com/minio/operator/examples/kustomization/tenant-certmanager\?ref\=v5.0.10 > /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-cert-manager-5-0-10.yaml
 }
 
 
