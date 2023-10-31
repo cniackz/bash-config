@@ -1267,8 +1267,13 @@ function installOperatorFromGitHub() {
 
 
 
+function createOperatorYAML_5_0_8() {
+    kustomize build github.com/minio/operator/resources/\?ref\=v5.0.8 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-8.yaml
+}
 
-
+function createOperatorYAML_5_0_9() {
+    kustomize build github.com/minio/operator/resources/\?ref\=v5.0.9 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-9.yaml
+}
 
 function createOperatorYAML_5_0_7() {
     kustomize build github.com/minio/operator/resources/\?ref\=v5.0.7 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-7.yaml
@@ -1311,6 +1316,14 @@ function createTenantYAMLCertManager_5_0_4() {
 
 function createTenantYAMLCertManager_5_0_7() {
     kustomize build github.com/minio/operator/examples/kustomization/tenant-certmanager\?ref\=v5.0.7 > /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-cert-manager-5-0-7.yaml
+}
+
+function createTenantYAMLCertManager_5_0_9() {
+    kustomize build github.com/minio/operator/examples/kustomization/tenant-certmanager\?ref\=v5.0.9 > /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-cert-manager-5-0-9.yaml
+}
+
+function createTenantYAMLCertManager_5_0_8() {
+    kustomize build github.com/minio/operator/examples/kustomization/tenant-certmanager\?ref\=v5.0.8 > /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-cert-manager-5-0-8.yaml
 }
 
 
