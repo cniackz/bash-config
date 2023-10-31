@@ -1300,6 +1300,10 @@ function createTenantYAMLCertManager() {
 }
 
 
+function createTenantYAMLCertManager_4_5_8() {
+    kustomize build github.com/minio/operator/examples/kustomization/tenant-certmanager\?ref\=v4.5.8 > /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-cert-manager-4-5-8.yaml
+}
+
 
 
 
