@@ -1277,8 +1277,9 @@ function installOperatorFromGitHub() {
 
 
 
-
-
+function createOperatorYAML_4_5_8() {
+    kustomize build github.com/minio/operator/resources/\?ref\=v4.5.8 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-4-5-8.yaml
+}
 
 # This function creates the Operator YAML
 # It requires fast network to work and the kustomize command.
