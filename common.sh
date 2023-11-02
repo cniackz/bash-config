@@ -1734,7 +1734,12 @@ function installtenantnp() {
 
 
 
+function helm_install_tenant() {
 
+k create namespace tenant-ns
+helm install -f /Users/cniackz/operator/helm/tenant/values.yaml minio /Users/cniackz/operator/helm/tenant
+
+}
 
 
 
