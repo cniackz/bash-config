@@ -1633,7 +1633,9 @@ function installtenanthelp() {
 
 
 
-
+function installtenantkustomize_cert_manager() {
+    kubectl apply -k github.com/minio/operator/examples/kustomization/tenant-certmanager
+}
 
 
 
@@ -1796,7 +1798,16 @@ function installtenanthelm() {
 
 
 
+# To install tenant for nginx with cert-manager
+function installtenantnginx_cert_manager() {
 
+    # Install Tenant via Kustomize as our preferred method:
+    installtenantkustomize_cert_manager
+
+    # Apply ingress:
+    k apply -f /Users/cniackz/bash-config/config-files/ingress/tenant-ingress-certmanager.yaml
+
+}
 
 
 
