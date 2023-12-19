@@ -2395,7 +2395,8 @@ function update() {
     git checkout $BRANCH
 
 
-    if [ "$REPO" == "minio" || "$REPO" == "minio-1" ]
+    # https://stackoverflow.com/questions/35281797/missing-in-bash-script
+    if [[ "$REPO" == "minio" || "$REPO" == "minio-1" ]]
     then
         echo "REPO is minio, meaning is a PR for minio golden repo"
         echo "Hence proper name is required not minio-1 but minio just."
@@ -2403,7 +2404,8 @@ function update() {
     fi
 
 
-    if [ "$REPO" == "mission-control" || "$REPO" == "mission-control" ]
+    # https://stackoverflow.com/questions/35281797/missing-in-bash-script
+    if [[ "$REPO" == "mission-control" || "$REPO" == "mission-control" ]]
     then
         echo "REPO is mission-control, meaning is a PR for mission-control repo"
         echo "Hence proper name is required not other but mission-control."
