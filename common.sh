@@ -2095,6 +2095,12 @@ function createPR() {
         echo "                                        "
         echo "                                        "
         echo "                                        "
+        echo "createPR mission-control name-of-the-pr "
+        echo "          |                             "
+        echo "          |___ mission-control          "
+        echo "                                        "
+        echo "                                        "
+        echo "                                        "
         return 0
     fi
 
@@ -2198,6 +2204,11 @@ function gc() {
     if [ "$REPO" == "rh" ]
     then
         REPO=release-hub
+    fi
+
+    if [ "$REPO" == "mission-control" ]
+    then
+        REPO=mission-control
     fi
 
     git clone git@github.com:cniackz/${REPO}.git
@@ -2316,6 +2327,13 @@ function convert_short_name_to_proper_name() {
         ACCOUNT=minio
     fi
 
+    if [ "$REPO" == "mission-control" ]
+    then
+        REPO=mission-control
+        BRANCH=master
+        ACCOUNT=miniohq
+    fi
+
     if [ "$REPO" == "rm" ]
     then
         echo "convert_short_name_to_proper_name(): REPO is rm then REPO will be release-manager"
@@ -2382,6 +2400,14 @@ function update() {
         echo "REPO is minio, meaning is a PR for minio golden repo"
         echo "Hence proper name is required not minio-1 but minio just."
         REPO=minio
+    fi
+
+
+    if [ "$REPO" == "mission-control" || "$REPO" == "mission-control" ]
+    then
+        echo "REPO is mission-control, meaning is a PR for mission-control repo"
+        echo "Hence proper name is required not other but mission-control."
+        REPO=mission-control
     fi
 
 
