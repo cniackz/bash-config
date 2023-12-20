@@ -1935,6 +1935,11 @@ function installubuntu() {
 
 
 
+function squashmissioncontrol() {
+    git remote add upstream git@github.com:miniohq/mission-control.git
+    git fetch upstream
+    git rebase -i upstream/master
+}
 
 function squashdocs() {
     git remote add upstream git@github.com:minio/docs.git
