@@ -1,0 +1,275 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tenant-certmanager-kes
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kes-configuration
+  namespace: tenant-certmanager-kes
+stringData:
+  server-config.yaml: "version: v1\naddress: :7373\nadmin:\n  identity: _ # Effectively
+    disabled since no root identity necessary.\ntls:\n  key: /tmp/kes/server.key   #
+    Path to the TLS private key\n  cert: /tmp/kes/server.crt # Path to the TLS certificate\n
+    \ proxy:\n    identities: []\n    header:\n      cert: X-Tls-Client-Cert\npolicy:\n
+    \ my-policy:\n    allow:\n    - /v1/api\n    - /v1/key/create/*\n    - /v1/key/generate/*\n
+    \   - /v1/key/decrypt/*\n    - /v1/key/bulk/decrypt/*\n    identities:\n    -
+    ${MINIO_KES_IDENTITY}\ncache:\n  expiry:\n    any: 5m0s\n    unused: 20s\nlog:\n
+    \ error: on\n  audit: off\nkeystore:\n  ## KES configured with fs (File System
+    mode) doesnt work in Kubernetes environments and it's not recommended\n  ## use
+    a real KMS\n  # fs:\n  #   path: \"./keys\" # Path to directory. Keys will be
+    stored as files. Not Recommended for Production.\n  vault:\n    endpoint: \"http://vault.default.svc.cluster.local:8200\"
+    # The Vault endpoint\n    namespace: \"\" # An optional Vault namespace. See:
+    https://www.vaultproject.io/docs/enterprise/namespaces/index.html\n    prefix:
+    \"my-minio\"    # An optional K/V prefix. The server will store keys under this
+    prefix.\n    approle:    # AppRole credentials. See: https://www.vaultproject.io/docs/auth/approle.html\n
+    \     id: \"<YOUR APPROLE ID HERE>\"      # Your AppRole Role ID\n      secret:
+    \"<YOUR APPROLE SECRET ID HERE>\"  # Your AppRole Secret ID\n      retry: 15s
+    \ # Duration until the server tries to re-authenticate after connection loss.\n
+    \   tls:        # The Vault client TLS configuration for mTLS authentication and
+    certificate verification\n      key: \"\"     # Path to the TLS client private
+    key for mTLS authentication to Vault\n      cert: \"\"    # Path to the TLS client
+    certificate for mTLS authentication to Vault\n      ca: \"\"      # Path to one
+    or multiple PEM root CA certificates\n    status:     # Vault status configuration.
+    The server will periodically reach out to Vault to check its status.\n      ping:
+    10s   # Duration until the server checks Vault's status again.\n  # aws:\n  #
+    \  # The AWS SecretsManager key store. The server will store\n  #   # secret keys
+    at the AWS SecretsManager encrypted with\n  #   # AWS-KMS. See: https://aws.amazon.com/secrets-manager\n
+    \ #   secretsmanager:\n  #     endpoint: \"\"   # The AWS SecretsManager endpoint
+    \     - e.g.: secretsmanager.us-east-2.amazonaws.com\n  #     region: \"\"     #
+    The AWS region of the SecretsManager - e.g.: us-east-2\n  #     kmskey: \"\"     #
+    The AWS-KMS key ID used to en/decrypt secrets at the SecretsManager. By default
+    (if not set) the default AWS-KMS key will be used.\n  #     credentials:   # The
+    AWS credentials for accessing secrets at the AWS SecretsManager.\n  #       accesskey:
+    \"\"  # Your AWS Access Key\n  #       secretkey: \"\"  # Your AWS Secret Key\n
+    \ #       token: \"\"      # Your AWS session token (usually optional)\n  # gcp:\n
+    \ #   secretmanager:\n  #     # The project ID is a unique, user-assigned ID that
+    can be used by Google APIs.\n  #     # The project ID must be a unique string
+    of 6 to 30 lowercase letters, digits, or hyphens.\n  #     # It must start with
+    a letter, and cannot have a trailing hyphen.\n  #     # See: https://cloud.google.com/resource-manager/docs/creating-managing-projects#before_you_begin\n
+    \ #     project_id: <PROJECT_ID>\n  #     # An optional GCP SecretManager endpoint.
+    If not set, defaults to: secretmanager.googleapis.com:443\n  #     endpoint: \"\"\n
+    \ #     # An optional list of GCP OAuth2 scopes. For a list of GCP scopes refer
+    to: https://developers.google.com/identity/protocols/oauth2/scopes\n  #     #
+    If not set, the GCP default scopes are used.\n  #     scopes: \n  #     - \"https://www.googleapis.com/auth/cloud-platform\"\n
+    \ #     # The credentials for your GCP service account. If running inside GCP
+    (app engine) the credentials\n  #     # can be empty and will be fetched from
+    the app engine environment automatically.\n  #     credentials:\n  #       client_email:
+    \  \"\" # The service account email                          - e.g. <account>@<project-ID>.iam.gserviceaccount.com\n
+    \ #       client_id:      \"\" # The service account client ID                      -
+    e.g. 113491952745362495489\"\n  #       private_key_id: \"\" # The service account
+    private key                    - e.g. 381514ebd3cf45a64ca8adc561f0ce28fca5ec06\n
+    \ #       private_key:    \"\"\n  #     ## KES configured with fs (File System
+    mode) doesnt work in Kubernetes environments and it's not recommended"
+type: Opaque
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: storage-configuration
+  namespace: tenant-certmanager-kes
+stringData:
+  config.env: |-
+    export MINIO_ROOT_USER="minio"
+    export MINIO_ROOT_PASSWORD="minio123"
+    export MINIO_STORAGE_CLASS_STANDARD="EC:2"
+    export MINIO_BROWSER="on"
+type: Opaque
+---
+apiVersion: v1
+data:
+  CONSOLE_ACCESS_KEY: Y29uc29sZQ==
+  CONSOLE_SECRET_KEY: Y29uc29sZTEyMw==
+kind: Secret
+metadata:
+  name: storage-user
+  namespace: tenant-certmanager-kes
+type: Opaque
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: vault
+  name: vault
+  namespace: tenant-certmanager-kes
+spec:
+  ports:
+  - name: http
+    port: 8200
+  selector:
+    app: vault
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault
+  namespace: tenant-certmanager-kes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vault
+  template:
+    metadata:
+      labels:
+        app: vault
+    spec:
+      containers:
+      - env:
+        - name: SECRET_SHARES
+          value: "5"
+        - name: SECRET_THRESHOLD
+          value: "3"
+        - name: SELF_SIGNED_CERT
+          value: "true"
+        - name: TOTAL_INIT_RETRIES
+          value: "5"
+        image: vault:1.13.3
+        imagePullPolicy: IfNotPresent
+        name: vault
+        ports:
+        - containerPort: 8200
+          name: http
+        securityContext:
+          capabilities:
+            add:
+            - IPC_LOCK
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tenant-certmanager-2-cert
+  namespace: tenant-certmanager-kes
+spec:
+  dnsNames:
+  - '*.tenant-certmanager.svc.cluster.local'
+  - '*.myminio.tenant-certmanager.svc.cluster.local'
+  - '*.myminio-hl.tenant-certmanager.svc.cluster.local'
+  issuerRef:
+    name: tenant-certmanager-issuer
+  secretName: tenant-certmanager-2-tls
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tenant-certmanager-cert
+  namespace: tenant-certmanager-kes
+spec:
+  dnsNames:
+  - '*.tenant-certmanager.svc.cluster.local'
+  - '*.myminio.tenant-certmanager.svc.cluster.local'
+  - '*.myminio-hl.tenant-certmanager.svc.cluster.local'
+  issuerRef:
+    name: tenant-certmanager-issuer
+  secretName: tenant-certmanager-tls
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: tenant-certmanager-issuer
+  namespace: tenant-certmanager-kes
+spec:
+  selfSigned: {}
+---
+apiVersion: minio.min.io/v2
+kind: Tenant
+metadata:
+  annotations:
+    prometheus.io/path: /minio/v2/metrics/cluster
+    prometheus.io/port: "9000"
+    prometheus.io/scrape: "true"
+  labels:
+    app: minio
+  name: myminio
+  namespace: tenant-certmanager-kes
+spec:
+  certConfig: {}
+  configuration:
+    name: storage-configuration
+  env: []
+  externalCaCertSecret: []
+  externalCertSecret:
+  - name: tenant-certmanager-tls
+    type: cert-manager.io/v1
+  externalClientCertSecrets: []
+  features:
+    bucketDNS: false
+    domains: {}
+  image: quay.io/minio/minio:RELEASE.2023-11-15T20-43-25Z
+  imagePullSecret: {}
+  kes:
+    affinity:
+      nodeAffinity: {}
+      podAffinity: {}
+      podAntiAffinity: {}
+    annotations: {}
+    env: []
+    externalCertSecret:
+      name: tenant-certmanager-2-tls
+      type: cert-manager.io/v1
+    image: minio/kes:2023-11-10T10-44-28Z
+    imagePullPolicy: IfNotPresent
+    kesSecret:
+      name: kes-configuration
+    keyName: my-minio-key
+    labels: {}
+    nodeSelector: {}
+    replicas: 1
+    resources: {}
+    securityContext:
+      fsGroup: 1000
+      fsGroupChangePolicy: Always
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+    serviceAccountName: ""
+    tolerations: []
+  mountPath: /export
+  podManagementPolicy: Parallel
+  pools:
+  - affinity:
+      nodeAffinity: {}
+      podAffinity: {}
+      podAntiAffinity: {}
+    containerSecurityContext:
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+    name: pool-0
+    nodeSelector: {}
+    resources: {}
+    securityContext:
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+    servers: 4
+    tolerations: []
+    topologySpreadConstraints: []
+    volumeClaimTemplate:
+      apiVersion: v1
+      kind: persistentvolumeclaims
+      metadata: {}
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Ti
+        storageClassName: standard
+      status: {}
+    volumesPerServer: 4
+  priorityClassName: ""
+  requestAutoCert: false
+  serviceAccountName: ""
+  serviceMetadata:
+    consoleServiceAnnotations: {}
+    consoleServiceLabels: {}
+    minioServiceAnnotations: {}
+    minioServiceLabels: {}
+  subPath: ""
+  users:
+  - name: storage-user
