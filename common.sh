@@ -1266,15 +1266,18 @@ function installOperatorFromGitHub() {
 
 
 
-
-
-
-function createOperatorYAML_5_0_8() {
-    kustomize build github.com/minio/operator/resources/\?ref\=v5.0.8 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-8.yaml
+# This function creates the Operator YAML
+# It requires fast network to work and the kustomize command.
+function createOperatorYAML() {
+    kustomize build github.com/minio/operator/resources/\?ref\=v5.0.11 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-11.yaml
 }
 
 function createOperatorYAML_5_0_9() {
     kustomize build github.com/minio/operator/resources/\?ref\=v5.0.9 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-9.yaml
+}
+
+function createOperatorYAML_5_0_8() {
+    kustomize build github.com/minio/operator/resources/\?ref\=v5.0.8 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-8.yaml
 }
 
 function createOperatorYAML_5_0_7() {
@@ -1289,11 +1292,58 @@ function createOperatorYAML_4_5_8() {
     kustomize build github.com/minio/operator/resources/\?ref\=v4.5.8 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-4-5-8.yaml
 }
 
-# This function creates the Operator YAML
-# It requires fast network to work and the kustomize command.
-function createOperatorYAML() {
-    kustomize build github.com/minio/operator/resources/\?ref\=v5.0.10 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-10.yaml
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function createTenantYAML() {
     # From Master:
