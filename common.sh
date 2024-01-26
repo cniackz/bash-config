@@ -91,6 +91,32 @@ function gcommit() {
 
 
 
+# To load docker image to kind cluster
+function kindLoadDockerImage() {
+	kind load docker-image $1
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
