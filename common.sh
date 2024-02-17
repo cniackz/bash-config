@@ -1096,7 +1096,7 @@ function installoperatorhelp() {
 
 ### installoperatornp is for nodeport
 function installoperatornp() {
-    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-11.yaml
+    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-12.yaml
     exposeOperatorViaNodePort
 }
 
