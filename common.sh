@@ -93,7 +93,7 @@ function gcommit() {
 
 # To load docker image to kind cluster
 function kindLoadDockerImage() {
-	kind load docker-image $1
+    kind load docker-image $1
 }
 
 
@@ -1096,7 +1096,14 @@ function installoperatorhelp() {
 
 ### installoperatornp is for nodeport
 function installoperatornp() {
+    echo " "
+    echo " "
+    echo " "
+    echo "##########################"
+    echo " "
     echo "Installing Operator 5.0.12"
+    echo " "
+    echo "##########################"
     k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-12.yaml
     exposeOperatorViaNodePort
 }
@@ -1397,7 +1404,7 @@ function createTenantYAMLCertManager_4_5_8() {
 }
 
 function createTenantYAML_4_5_8() {
-	kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v4.5.8 > /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-4-5-8.yaml
+    kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v4.5.8 > /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-4-5-8.yaml
 }
 
 function createTenantYAMLCertManager_5_0_4() {
