@@ -1,0 +1,56 @@
+apiVersion: job.min.io/v1alpha1
+kind: MinIOJob
+metadata:
+  name: myminio
+  namespace: tenant-lite
+spec:
+  serviceAccountName: tenant-lite
+  tenant:
+    name: my-tenant
+    namespace: default
+  execution: parallel # Sequential
+  # disableWaitForReady: true
+  commands:
+    - op: ready
+    - op: make-bucket
+      args:
+        name: memes
+    - name: add-my-user-1
+      op: admin/user/add
+      args:
+        user: daniel
+        password: daniel123
+    - name: add-my-policy
+      op: admin/policy/add
+      args:
+        name: memes-access
+        policy: |
+          {
+              "Version": "2012-10-17",
+              "Statement": [
+                  {
+                      "Effect": "Allow",
+                      "Action": [
+                          "s3:*"
+                      ],
+                      "Resource": [
+                          "arn:aws:s3:::memes",
+                          "arn:aws:s3:::memes/*"
+                      ]
+                  }
+              ]
+          }
+    - op: admin/policy/attach
+      dependsOn:
+        - add-my-user-1
+        - add-my-policy
+      args:
+        policy: memes-access
+status:
+  phase: Failed # Completed, Pending, Waiting, Running
+  commands:
+    - name: wait-ready
+      result: success
+    - result: succes
+    - result: failure
+      message: this and that
