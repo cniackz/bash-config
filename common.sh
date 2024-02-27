@@ -2036,6 +2036,12 @@ function squashmissioncontrol() {
     git rebase -i upstream/master
 }
 
+function squashenterpriseoperator() {
+    git remote add upstream git@github.com:miniohq/enterprise-operator.git
+    git fetch upstream
+    git rebase -i upstream/master
+}
+
 function squashdocs() {
     git remote add upstream git@github.com:minio/docs.git
     git fetch upstream
@@ -2157,50 +2163,56 @@ function createPR() {
 
     if [ "$1" == "help" ]
     then
-        echo "                                        "
-        echo "                                        "
-        echo "                                        "
-        echo "########################################"
-        echo "# Examples you can use:                 "
-        echo "########################################"
-        echo "                                        "
-        echo "                                        "
-        echo "createPR rm name-of-the-pr              "
-        echo "          |                             "
-        echo "          |___ release-manager          "
-        echo "                                        "
-        echo "                                        "
-        echo "                                        "
-        echo "createPR enterprise name-of-the-pr      "
-        echo "          |                             "
-        echo "          |___ enterprise               "
-        echo "                                        "
-        echo "                                        "
-        echo "                                        "
-        echo "createPR dp name-of-the-pr              "
-        echo "          |                             "
-        echo "          |___ directpv                 "
-        echo "                                        "
-        echo "                                        "
-        echo "                                        "
-        echo "createPR docs name-of-the-pr            "
-        echo "          |                             "
-        echo "          |___ docs                     "
-        echo "                                        "
-        echo "                                        "
-        echo "                                        "
-        echo "createPR minio-1 name-of-the-pr         "
-        echo "          |                             "
-        echo "          |___ minio                    "
-        echo "                                        "
-        echo "                                        "
-        echo "                                        "
-        echo "createPR mission-control name-of-the-pr "
-        echo "          |                             "
-        echo "          |___ mission-control          "
-        echo "                                        "
-        echo "                                        "
-        echo "                                        "
+        echo "                                            "
+        echo "                                            "
+        echo "                                            "
+        echo "########################################    "
+        echo "# Examples you can use:                     "
+        echo "########################################    "
+        echo "                                            "
+        echo "                                            "
+        echo "createPR rm name-of-the-pr                  "
+        echo "          |                                 "
+        echo "          |___ release-manager              "
+        echo "                                            "
+        echo "                                            "
+        echo "                                            "
+        echo "createPR enterprise name-of-the-pr          "
+        echo "          |                                 "
+        echo "          |___ enterprise                   "
+        echo "                                            "
+        echo "                                            "
+        echo "                                            "
+        echo "createPR dp name-of-the-pr                  "
+        echo "          |                                 "
+        echo "          |___ directpv                     "
+        echo "                                            "
+        echo "                                            "
+        echo "                                            "
+        echo "createPR docs name-of-the-pr                "
+        echo "          |                                 "
+        echo "          |___ docs                         "
+        echo "                                            "
+        echo "                                            "
+        echo "                                            "
+        echo "createPR minio-1 name-of-the-pr             "
+        echo "          |                                 "
+        echo "          |___ minio                        "
+        echo "                                            "
+        echo "                                            "
+        echo "                                            "
+        echo "createPR mission-control name-of-the-pr     "
+        echo "          |                                 "
+        echo "          |___ mission-control              "
+        echo "                                            "
+        echo "                                            "
+        echo "                                            "
+        echo "createPR enterprise-operator name-of-the-pr "
+        echo "          |                                 "
+        echo "          |___ enterprise-operator          "
+        echo "                                            "
+        echo "                                            "
+        echo "                                            "
         return 0
     fi
 
@@ -2309,6 +2321,11 @@ function gc() {
     if [ "$REPO" == "mission-control" ]
     then
         REPO=mission-control
+    fi
+
+    if [ "$REPO" == "enterprise-operator" ]
+    then
+        REPO=enterprise-operator
     fi
 
     git clone git@github.com:cniackz/${REPO}.git
@@ -2434,6 +2451,13 @@ function convert_short_name_to_proper_name() {
         ACCOUNT=miniohq
     fi
 
+    if [ "$REPO" == "enterprise-operator" ]
+    then
+        REPO=enterprise-operator
+        BRANCH=master
+        ACCOUNT=miniohq
+    fi
+
     if [ "$REPO" == "rm" ]
     then
         echo "convert_short_name_to_proper_name(): REPO is rm then REPO will be release-manager"
@@ -2510,6 +2534,14 @@ function update() {
         echo "REPO is mission-control, meaning is a PR for mission-control repo"
         echo "Hence proper name is required not other but mission-control."
         REPO=mission-control
+    fi
+
+    # https://stackoverflow.com/questions/35281797/missing-in-bash-script
+    if [[ "$REPO" == "enterprise-operator" || "$REPO" == "enterprise-operator" ]]
+    then
+        echo "REPO is enterprise-operator, meaning is a PR for enterprise-operator repo"
+        echo "Hence proper name is required not other but enterprise-operator."
+        REPO=enterprise-operator
     fi
 
 
