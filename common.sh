@@ -1854,6 +1854,15 @@ function installtenanthelm() {
 }
 
 
+# To install tenant via Helm:
+function installtenanthelmexistingsecret() {
+    helm install \
+      --namespace tenant-ns \
+      --create-namespace tenant-ns \
+      /Users/cniackz/bash-config/config-files/helm/Tenant/helm-tenant-5.0.9-existingSecret
+}
+
+
 
 
 
