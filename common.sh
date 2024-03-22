@@ -1805,11 +1805,7 @@ function installtenantkustomize() {
 
 
 
-# To install tenant for node port
-function installtenantnp() {
-    installtenantkustomize
-    # TODO: Expose tenant via NodePort, remember there are two services one for mc the other for react.
-}
+
 
 
 
@@ -2729,6 +2725,27 @@ function useNodePortInTenant() {
     kubectl apply -f service.yaml
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# To install tenant for node port
+function installtenantnp() {
+    installtenantkustomize
+    # Expose tenant via NodePort, remember there are two services one for mc the other for react.
+    useNodePortInTenant # This is for react
+    # TODO: Expose the one for mc which is minio
+}
 
 
 
