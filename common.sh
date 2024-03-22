@@ -1101,10 +1101,10 @@ function installoperatornp() {
     echo " "
     echo "##########################"
     echo " "
-    echo "Installing Operator 5.0.12"
+    echo "Installing Operator 5.0.14"
     echo " "
     echo "##########################"
-    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-12.yaml
+    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-14.yaml
     exposeOperatorViaNodePort
 }
 
@@ -1303,7 +1303,7 @@ function installOperatorFromGitHub() {
 # This function creates the Operator YAML
 # It requires fast network to work and the kustomize command.
 function createOperatorYAML() {
-    kustomize build github.com/minio/operator/resources/\?ref\=v5.0.12 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-12.yaml
+    kustomize build github.com/minio/operator/resources/\?ref\=v5.0.14 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-14.yaml
 }
 
 function createOperatorYAML_5_0_11() {
