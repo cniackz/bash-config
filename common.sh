@@ -948,8 +948,11 @@ function installoperator() {
     elif [ "$1" == "withhelm" ]
     then
         installoperatorhelm
-    else
+    elif [ "$1" == "help" ]
+    then
         installoperatorhelp
+    else
+        installoperatornp
     fi
 }
 
