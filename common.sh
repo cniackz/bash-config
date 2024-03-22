@@ -1394,7 +1394,7 @@ function createTenantYAML() {
     # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite > tenant.yaml
     # From Tag:
     # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v5.0.8 > tenant.yaml
-    kustomize build "github.com/minio/operator/examples/kustomization/tenant-lite/?timeout=120&ref=v5.0.11" > /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-11.yaml
+    kustomize build "github.com/minio/operator/examples/kustomization/tenant-lite/?timeout=120&ref=v5.0.14" > /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-14.yaml
 }
 
 function createTenantYAMLCertManager() {
@@ -1746,7 +1746,7 @@ function installtenantkustomize_cert_manager() {
 
 
 function installtenantkustomize() {
-    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-11.yaml
+    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-14.yaml
 }
 
 
