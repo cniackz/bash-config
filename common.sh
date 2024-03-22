@@ -1619,8 +1619,12 @@ function installtenant() {
     elif [ "$1" == "helm" ]
     then
         installtenanthelm
-    else
+    elif [ "$1" == "help" ]
+    then
         installtenanthelp
+    else
+        # by default use node port
+        installtenantnp
     fi
 }
 
