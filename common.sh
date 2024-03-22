@@ -2713,3 +2713,33 @@ function miniokube() {
     installoperator
     installtenant
 }
+
+
+
+
+
+
+
+
+# To use 30081 in Tenant
+function useNodePortInTenant() {
+    kubectl get service myminio-console -n tenant-lite -o yaml > service.yaml
+    yq -i '.spec.type |= "NodePort"' service.yaml
+    yq -i '.spec.ports[0].nodePort |= 30081' service.yaml
+    kubectl apply -f service.yaml
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
