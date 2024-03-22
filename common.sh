@@ -2702,4 +2702,10 @@ function getminio() {
 
 
 
-
+# One single function to set all up
+function miniokube() {
+    kind delete cluster
+    createcluster
+    installoperator
+    installtenant
+}
