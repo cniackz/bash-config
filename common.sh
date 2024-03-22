@@ -216,11 +216,14 @@ function createcluster() {
     then
         createclusterbase
         ISTHEREACLUSTER=YES
-    else
+    elif [ "$1" == "help" ]
+    then
         createclusterhelp
         ISTHEREACLUSTER=NO
+    else
+        createclusternp
     fi
-    
+
     # Create Labels for nodes only if we have a cluster:
     if [ "$ISTHEREACLUSTER" == "YES" ]
     then
