@@ -2719,6 +2719,8 @@ function miniokube() {
 
 # To use 30081 in Tenant
 function useNodePortInTenant() {
+    sleep 60
+    kubectl wait --for=condition=ready --timeout=600s -n tenant-lite --all pods
     kubectl get service myminio-console -n tenant-lite -o yaml > service.yaml
     yq -i '.spec.type |= "NodePort"' service.yaml
     yq -i '.spec.ports[0].nodePort |= 30081' service.yaml
