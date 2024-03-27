@@ -2057,6 +2057,12 @@ function squashenterpriseoperator() {
     git rebase -i upstream/master
 }
 
+function squashautomation() {
+    git remote add upstream git@github.com:miniohq/automation.git
+    git fetch upstream
+    git rebase -i upstream/main
+}
+
 function squashdocs() {
     git remote add upstream git@github.com:minio/docs.git
     git fetch upstream
@@ -2228,6 +2234,12 @@ function createPR() {
         echo "                                            "
         echo "                                            "
         echo "                                            "
+        echo "createPR automation name-of-the-pr          "
+        echo "          |                                 "
+        echo "          |___ automation                   "
+        echo "                                            "
+        echo "                                            "
+        echo "                                            "
         return 0
     fi
 
@@ -2341,6 +2353,11 @@ function gc() {
     if [ "$REPO" == "enterprise-operator" ]
     then
         REPO=enterprise-operator
+    fi
+
+    if [ "$REPO" == "automation" ]
+    then
+        REPO=automation
     fi
 
     git clone git@github.com:cniackz/${REPO}.git
@@ -2473,6 +2490,13 @@ function convert_short_name_to_proper_name() {
         ACCOUNT=miniohq
     fi
 
+    if [ "$REPO" == "automation" ]
+    then
+        REPO=automation
+        BRANCH=main
+        ACCOUNT=miniohq
+    fi
+
     if [ "$REPO" == "rm" ]
     then
         echo "convert_short_name_to_proper_name(): REPO is rm then REPO will be release-manager"
@@ -2559,6 +2583,13 @@ function update() {
         REPO=enterprise-operator
     fi
 
+    # https://stackoverflow.com/questions/35281797/missing-in-bash-script
+    if [[ "$REPO" == "automation" || "$REPO" == "automation" ]]
+    then
+        echo "REPO is automation, meaning is a PR for automation repo"
+        echo "Hence proper name is required not other but automation."
+        REPO=automation
+    fi
 
     echo "git remote add upstream git@github.com:${ACCOUNT}/${REPO}.git"
     git remote add upstream git@github.com:${ACCOUNT}/${REPO}.git
