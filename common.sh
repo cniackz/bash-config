@@ -2060,7 +2060,7 @@ function squashenterpriseoperator() {
 function squashautomation() {
     git remote add upstream git@github.com:miniohq/automation.git
     git fetch upstream
-    git rebase -i upstream/main
+    git rebase -i upstream/master
 }
 
 function squashdocs() {
@@ -2493,7 +2493,7 @@ function convert_short_name_to_proper_name() {
     if [ "$REPO" == "automation" ]
     then
         REPO=automation
-        BRANCH=main
+        BRANCH=master
         ACCOUNT=miniohq
     fi
 
