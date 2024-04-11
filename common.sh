@@ -2756,6 +2756,11 @@ function useNodePortInTenant() {
     yq -i '.spec.type |= "NodePort"' service.yaml
     yq -i '.spec.ports[0].nodePort |= 30081' service.yaml
     kubectl apply -f service.yaml
+	####
+	kubectl get service minio -n tenant-lite -o yaml > service-minio.yaml
+	yq -i '.spec.type |= "NodePort"' service-minio.yaml
+	yq -i '.spec.ports[0].nodePort |= 30082' service-minio.yaml
+	kubectl apply -f service-minio.yaml
 }
 
 
@@ -2777,7 +2782,6 @@ function installtenantnp() {
     installtenantkustomize
     # Expose tenant via NodePort, remember there are two services one for mc the other for react.
     useNodePortInTenant # This is for react
-    # TODO: Expose the one for mc which is minio
 }
 
 
