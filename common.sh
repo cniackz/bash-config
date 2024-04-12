@@ -2910,9 +2910,14 @@ mc alias set myminio https://127.0.0.1:30082 minio minio123 --insecure
 function decommission() {
 
 mc alias set myminio https://127.0.0.1:30082 minio minio123 --insecure
-mc mb myminio/celis --insecure
-echo "a" > a.txt
-mc cp a.txt myminio/celis/a.txt --insecure
+
+
+# Create the bucket
+mc mb myminio/bucket --insecure
+sleep 10
+for i in {1..10}; do
+	echo "content$i" | mc pipe myminio/bucket/file"$i" --insecure
+done
 
 mc admin decommission status myminio --insecure
 mc admin decommission start myminio/ https://myminio-pool-0-{0...3}.myminio-hl.tenant-lite.svc.cluster.local/export{0...1} --insecure
@@ -2924,6 +2929,7 @@ while true; do
     FINAL=$(echo "$OUTPUT" | grep "Complete" | wc -l | xargs)
     if [ "$FINAL" -ne 0 ]; then
         echo "Decommissioning completed"
+        mc admin decommission status myminio --insecure
         break
     fi
 done
