@@ -73,7 +73,7 @@ spec:
       runAsGroup: 1000
       runAsNonRoot: true
       runAsUser: 1000
-    name: pool-0
+    name: pool-1
     servers: 4
     volumeClaimTemplate:
       metadata:
