@@ -1622,6 +1622,9 @@ function installtenant() {
     elif [ "$1" == "help" ]
     then
         installtenanthelp
+    elif [ "$1" == "2pools" ]
+    then
+        installtenantnp2pools
     else
         # by default use node port
         installtenantnp
@@ -1751,6 +1754,10 @@ function installtenantkustomize_cert_manager() {
 
 function installtenantkustomize() {
     k apply -f /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-14.yaml
+}
+
+function installtenantkustomize2pools() {
+    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-14-2pools.yaml
 }
 
 
@@ -2783,6 +2790,14 @@ function installtenantnp() {
     # Expose tenant via NodePort, remember there are two services one for mc the other for react.
     useNodePortInTenant # This is for react
 }
+
+# To install tenant for node port
+function installtenantnp2pools() {
+    installtenantkustomize2pools
+    # Expose tenant via NodePort, remember there are two services one for mc the other for react.
+    useNodePortInTenant # This is for react
+}
+
 
 
 
