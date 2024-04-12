@@ -1,0 +1,107 @@
+apiVersion: v1
+items:
+  - apiVersion: minio.min.io/v2
+    kind: Tenant
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/last-applied-configuration: |
+          {"apiVersion":"minio.min.io/v2","kind":"Tenant","metadata":{"annotations":{"prometheus.io/path":"/minio/v2/metrics/cluster","prometheus.io/port":"9000","prometheus.io/scrape":"true"},"creationTimestamp":"2024-04-12T14:43:46Z","generation":2,"labels":{"app":"minio"},"name":"myminio","namespace":"tenant-lite","resourceVersion":"21100","uid":"97fd8076-dc07-473e-8b56-10ce1496cac0"},"spec":{"certConfig":{},"configuration":{"name":"storage-configuration"},"env":[],"externalCaCertSecret":[],"externalCertSecret":[],"externalClientCertSecrets":[],"features":{"bucketDNS":false,"domains":{}},"image":"quay.io/minio/minio:RELEASE.2024-03-15T01-07-19Z","imagePullSecret":{},"mountPath":"/export","podManagementPolicy":"Parallel","pools":[{"containerSecurityContext":{"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000},"name":"pool-1","servers":4,"volumeClaimTemplate":{"metadata":{"name":"data"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"2Gi"}}}},"volumesPerServer":2}],"priorityClassName":"","requestAutoCert":true,"serviceAccountName":"","serviceMetadata":{"consoleServiceAnnotations":{},"consoleServiceLabels":{},"minioServiceAnnotations":{},"minioServiceLabels":{}},"subPath":"","users":[{"name":"storage-user"}]},"status":{"availableReplicas":8,"certificates":{"autoCertEnabled":true,"customCertificates":{}},"currentState":"Initialized","drivesOnline":16,"healthStatus":"green","pools":[{"legacySecurityContext":false,"ssName":"myminio-pool-0","state":"PoolInitialized"},{"legacySecurityContext":false,"ssName":"myminio-pool-1","state":"PoolInitialized"}],"provisionedUsers":true,"revision":0,"syncVersion":"v5.0.0","usage":{"capacity":660951138304,"rawCapacity":34359738368,"rawUsage":290318974976,"usage":290318974976},"writeQuorum":6}}
+        prometheus.io/path: /minio/v2/metrics/cluster
+        prometheus.io/port: "9000"
+        prometheus.io/scrape: "true"
+      creationTimestamp: "2024-04-12T14:43:46Z"
+      generation: 4
+      labels:
+        app: minio
+      name: myminio
+      namespace: tenant-lite
+      resourceVersion: "22492"
+      uid: 97fd8076-dc07-473e-8b56-10ce1496cac0
+    scheduler:
+      name: ""
+    spec:
+      certConfig: {}
+      configuration:
+        name: storage-configuration
+      env: []
+      externalCaCertSecret: []
+      externalCertSecret: []
+      externalClientCertSecrets: []
+      features:
+        bucketDNS: false
+        domains: {}
+      image: quay.io/minio/minio:RELEASE.2024-03-15T01-07-19Z
+      imagePullSecret: {}
+      mountPath: /export
+      podManagementPolicy: Parallel
+      pools:
+        - affinity:
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: v1.min.io/tenant
+                        operator: In
+                        values:
+                          - myminio
+                      - key: v1.min.io/pool
+                        operator: In
+                        values:
+                          - pool-0
+                  topologyKey: kubernetes.io/hostname
+          name: pool-0
+          resources: {}
+          runtimeClassName: ""
+          servers: 2
+          volumeClaimTemplate:
+            metadata:
+              name: data
+            spec:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: "4294967296"
+              storageClassName: standard
+            status: {}
+          volumesPerServer: 4
+      priorityClassName: ""
+      requestAutoCert: true
+      serviceAccountName: ""
+      serviceMetadata:
+        consoleServiceAnnotations: {}
+        consoleServiceLabels: {}
+        minioServiceAnnotations: {}
+        minioServiceLabels: {}
+      subPath: ""
+      users:
+        - name: storage-user
+    status:
+      availableReplicas: 6
+      certificates:
+        autoCertEnabled: true
+        customCertificates: {}
+      currentState: Initialized
+      drivesOffline: 2
+      drivesOnline: 14
+      healthMessage: Reduced Availability
+      healthStatus: yellow
+      pools:
+        - legacySecurityContext: false
+          ssName: myminio-pool-1
+          state: PoolInitialized
+        - legacySecurityContext: false
+          ssName: myminio-pool-0
+          state: PoolInitialized
+      provisionedUsers: true
+      revision: 0
+      syncVersion: v5.0.0
+      usage:
+        capacity: 578341191680
+        rawCapacity: 51539607552
+        rawUsage: 254020157440
+        usage: 254020157440
+      writeQuorum: 6
+kind: List
+metadata:
+  resourceVersion: ""

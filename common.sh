@@ -2812,27 +2812,132 @@ function installtenantnp2pools() {
 
 
 
-function putobjects() {
-	mc alias set myminio https://127.0.0.1:30082 minio minio123 --insecure
-	mc mb myminio/celis --insecure
-	echo "a" > a.txt
-	mc cp a.txt myminio/celis/a.txt --insecure
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### ESTA FUNCION TE CREA EL TENANT CON DOS POOLS PARA PROBAR DECOMMISSION:
+function createdecommissiontenant() {
+createcluster
+docker pull quay.io/minio/minio:RELEASE.2024-03-15T01-07-19Z
+docker pull docker.io/minio/operator:v5.0.14
+kind load docker-image docker.io/minio/operator:v5.0.14
+kind load docker-image quay.io/minio/minio:RELEASE.2024-03-15T01-07-19Z
+installoperator
+installtenantnp2pools
+mc alias set myminio https://127.0.0.1:30082 minio minio123 --insecure
 }
 
+#### ESPERA HASTA QUE ESTE ESTABLE EL TENANT...
+
+### LUEGO CORRE DECOMMISSION Y VE SI SE PIERDEN ARCHIVOS
 function decommission() {
-	mc admin decommission status myminio --insecure
-	mc admin decommission start myminio/ https://myminio-pool-0-{0...3}.myminio-hl.tenant-lite.svc.cluster.local/export{0...1} --insecure
-}
 
-function removepool1() {
+mc alias set myminio https://127.0.0.1:30082 minio minio123 --insecure
+mc mb myminio/celis --insecure
+echo "a" > a.txt
+mc cp a.txt myminio/celis/a.txt --insecure
+
+mc admin decommission status myminio --insecure
+mc admin decommission start myminio/ https://myminio-pool-0-{0...3}.myminio-hl.tenant-lite.svc.cluster.local/export{0...1} --insecure
+
+
+#### ES DE NOTAR QUE ESTAMOS ESPERANDO AL COMPLETE ANTES DE HACER REMOVE DE LA POOL
+while true; do
+    OUTPUT=$(mc admin decommission status myminio --insecure)
+    FINAL=$(echo "$OUTPUT" | grep "Complete" | wc -l | xargs)
+    if [ "$FINAL" -ne 0 ]; then
+        echo "Decommissioning completed"
+        break
+    fi
+done
+
+# dale remove hasta que se complete y ve si reproduces el problema.
 rm -rf tenant
 rm -rf new-tenant
 kubectl get tenant -n tenant-lite -o yaml > tenant
 yq eval 'del(.items[0].spec.pools[0])' tenant > new-tenant
 kubectl replace -f new-tenant
+
 }
 
-
+# Es el remove pool el que causa la perdida de datos?
 
 
 
