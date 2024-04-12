@@ -2812,3 +2812,38 @@ function installtenantnp2pools() {
 
 
 
+function putobjects() {
+	mc alias set myminio https://127.0.0.1:30082 minio minio123 --insecure
+	mc mb myminio/celis --insecure
+	echo "a" > a.txt
+	mc cp a.txt myminio/celis/a.txt --insecure
+}
+
+function decommission() {
+	mc admin decommission status myminio --insecure
+	mc admin decommission start myminio/ https://myminio-pool-0-{0...3}.myminio-hl.tenant-lite.svc.cluster.local/export{0...1} --insecure
+}
+
+function removepool1() {
+rm -rf tenant
+rm -rf new-tenant
+kubectl get tenant -n tenant-lite -o yaml > tenant
+yq eval 'del(.items[0].spec.pools[0])' tenant > new-tenant
+kubectl replace -f new-tenant
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
