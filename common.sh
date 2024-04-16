@@ -2079,7 +2079,7 @@ function squashdocs() {
 function squashrh() {
     git remote add upstream git@github.com:miniohq/release-hub.git
     git fetch upstream
-    git rebase -i upstream/main
+    git rebase -i upstream/master
 }
 
 function squashrm() {
@@ -2441,7 +2441,7 @@ function convert_short_name_to_proper_name() {
     if [ "$REPO" == "rh" ]
     then
         REPO=release-hub
-        BRANCH=main
+        BRANCH=master
         ACCOUNT=miniohq
     fi
 
