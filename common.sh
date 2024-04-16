@@ -2082,6 +2082,12 @@ function squashrh() {
     git rebase -i upstream/master
 }
 
+function squashet() {
+    git remote add upstream git@github.com:miniohq/engineering-tools.git
+    git fetch upstream
+    git rebase -i upstream/master
+}
+
 function squashrm() {
     git remote add upstream git@github.com:miniohq/release-manager.git
     git fetch upstream
@@ -2254,6 +2260,12 @@ function createPR() {
         echo "                                            "
         echo "                                            "
         echo "                                            "
+        echo "createPR et name-of-the-pr                  "
+        echo "          |                                 "
+        echo "          |___ engineering-tools            "
+        echo "                                            "
+        echo "                                            "
+        echo "                                            "
         return 0
     fi
 
@@ -2359,6 +2371,11 @@ function gc() {
         REPO=release-hub
     fi
 
+    if [ "$REPO" == "et" ]
+    then
+        REPO=engineering-tools
+    fi
+
     if [ "$REPO" == "mission-control" ]
     then
         REPO=mission-control
@@ -2441,6 +2458,13 @@ function convert_short_name_to_proper_name() {
     if [ "$REPO" == "rh" ]
     then
         REPO=release-hub
+        BRANCH=master
+        ACCOUNT=miniohq
+    fi
+
+    if [ "$REPO" == "et" ]
+    then
+        REPO=engineering-tools
         BRANCH=master
         ACCOUNT=miniohq
     fi
