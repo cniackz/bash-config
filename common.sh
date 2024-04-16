@@ -2247,6 +2247,13 @@ function createPR() {
         echo "                                            "
         echo "                                            "
         echo "                                            "
+        echo "                                            "
+        echo "createPR rh name-of-the-pr                  "
+        echo "          |                                 "
+        echo "          |___ release-hub                  "
+        echo "                                            "
+        echo "                                            "
+        echo "                                            "
         return 0
     fi
 
@@ -2940,6 +2947,9 @@ rm -rf new-tenant
 kubectl get tenant -n tenant-lite -o yaml > tenant
 yq eval 'del(.items[0].spec.pools[0])' tenant > new-tenant
 kubectl replace -f new-tenant
+mc admin decommission status myminio --insecure
+mc ls myminio --insecure
+mc ls myminio/bucket --insecure
 
 }
 
