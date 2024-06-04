@@ -1399,6 +1399,14 @@ function createTenantYAML() {
     # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite > tenant.yaml
     # From Tag:
     # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v5.0.8 > tenant.yaml
+    kustomize build github.com/minio/operator/examples/kustomization/tenant-lite/\?timeout=120\&ref=v5.0.15 > /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-15.yaml
+}
+
+function createTenantYAML_5_0_14() {
+    # From Master:
+    # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite > tenant.yaml
+    # From Tag:
+    # kustomize build github.com/minio/operator/examples/kustomization/tenant-lite\?ref\=v5.0.8 > tenant.yaml
     kustomize build "github.com/minio/operator/examples/kustomization/tenant-lite/?timeout=120&ref=v5.0.14" > /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-14.yaml
 }
 
@@ -1758,7 +1766,12 @@ function installtenantkustomize_cert_manager() {
 
 
 function installtenantkustomize() {
-    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-14.yaml
+    echo "###########################"
+    echo " "
+    echo "Install Tenant 5.0.15"
+    echo " "
+    echo "###########################"
+    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Tenant/kustomize-tenant-5-0-15.yaml
 }
 
 function installtenantkustomize2pools() {
