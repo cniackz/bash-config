@@ -1107,10 +1107,10 @@ function installoperatornp() {
     echo " "
     echo "##########################"
     echo " "
-    echo "Installing Operator 5.0.14"
+    echo "Installing Operator 5.0.15"
     echo " "
     echo "##########################"
-    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-14.yaml
+    k apply -f /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-15.yaml
     exposeOperatorViaNodePort
 }
 
@@ -1309,6 +1309,11 @@ function installOperatorFromGitHub() {
 # This function creates the Operator YAML
 # It requires fast network to work and the kustomize command.
 function createOperatorYAML() {
+    # Timing out at 120 seconds for slow connection in the starbucks
+    kustomize build github.com/minio/operator/resources/\?timeout=120\&ref\=v5.0.15 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-15.yaml
+}
+
+function createOperatorYAML_5_0_14() {
     kustomize build github.com/minio/operator/resources/\?ref\=v5.0.14 > /Users/cniackz/bash-config/config-files/kustomize/Operator/kustomize-operator-5-0-14.yaml
 }
 
@@ -2794,11 +2799,11 @@ function useNodePortInTenant() {
     yq -i '.spec.type |= "NodePort"' service.yaml
     yq -i '.spec.ports[0].nodePort |= 30081' service.yaml
     kubectl apply -f service.yaml
-	####
-	kubectl get service minio -n tenant-lite -o yaml > service-minio.yaml
-	yq -i '.spec.type |= "NodePort"' service-minio.yaml
-	yq -i '.spec.ports[0].nodePort |= 30082' service-minio.yaml
-	kubectl apply -f service-minio.yaml
+    ####
+    kubectl get service minio -n tenant-lite -o yaml > service-minio.yaml
+    yq -i '.spec.type |= "NodePort"' service-minio.yaml
+    yq -i '.spec.ports[0].nodePort |= 30082' service-minio.yaml
+    kubectl apply -f service-minio.yaml
 }
 
 
@@ -2947,7 +2952,7 @@ mc alias set myminio https://127.0.0.1:30082 minio minio123 --insecure
 mc mb myminio/bucket --insecure
 sleep 10
 for i in {1..10}; do
-	echo "content$i" | mc pipe myminio/bucket/file"$i" --insecure
+    echo "content$i" | mc pipe myminio/bucket/file"$i" --insecure
 done
 
 mc admin decommission status myminio --insecure
