@@ -5,3 +5,14 @@ service-minio.yaml
 node_modules
 minio.1
 package.json
+statefulset.yaml 
+secret.yaml 
+package-lock.json 
+operator-console-tls.yaml
+operator-4-6-2.yaml 
+new-tenant 
+data.yaml 
+crd.yaml 
+a.txt 
+b.txt
+
