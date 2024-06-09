@@ -2,3 +2,4 @@
 public.crt
 service.yaml
 service-minio.yaml
+node_modules
