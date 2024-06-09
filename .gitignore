@@ -4,3 +4,4 @@ service.yaml
 service-minio.yaml
 node_modules
 minio.1
+package.json
