@@ -3061,4 +3061,45 @@ function krew() {
 
 
 
+# To tag an operator image to operator:latest
+function tagOperatorImage() {
+	docker tag $1 operator:latest
+}
+
+
+# To set the operator image after build it
+# Usage example:
+# $ setOperatorImage docker.io/minio/operator:v5.0.15-35-g6a8760d3
+function setOperatorImage() {
+	tagOperatorImage $1
+	kindLoadDockerImage operator:latest
+	kubectl -n minio-operator set image deployment/minio-operator minio-operator=operator:latest
+	kubectl -n minio-operator set image deployment/console console=operator:latest
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
