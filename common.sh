@@ -3095,8 +3095,10 @@ function goFumpt() {
 
 
 
-
-
+# To set operator replicas to zero while testing from outside
+function setReplica0() {
+	kubectl scale deploy -n minio-operator --replicas=0 --all
+}
 
 
 
