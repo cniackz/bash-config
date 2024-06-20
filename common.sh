@@ -3085,6 +3085,11 @@ function setOperatorImage() {
 
 
 
+# To avoid:
+# File is not `gofumpt`-ed (gofumpt)
+function goFumpt() {
+	gofumpt -l -w .
+}
 
 
 
@@ -3101,5 +3106,4 @@ function setOperatorImage() {
 
 
 
-
-
+ 
