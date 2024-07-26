@@ -2061,7 +2061,7 @@ function squashmissioncontrol() {
 }
 
 function squashenterpriseoperator() {
-    git remote add upstream git@github.com:miniohq/enterprise-operator.git
+    git remote add upstream git@github.com:miniohq/eos-operator.git
     git fetch upstream
     git rebase -i upstream/master
 }
@@ -2243,9 +2243,9 @@ function createPR() {
         echo "                                            "
         echo "                                            "
         echo "                                            "
-        echo "createPR enterprise-operator name-of-the-pr "
+        echo "createPR eos-operator name-of-the-pr        "
         echo "          |                                 "
-        echo "          |___ enterprise-operator          "
+        echo "          |___ eos-operator                 "
         echo "                                            "
         echo "                                            "
         echo "                                            "
@@ -2383,9 +2383,9 @@ function gc() {
         REPO=mission-control
     fi
 
-    if [ "$REPO" == "enterprise-operator" ]
+    if [ "$REPO" == "eos-operator" ]
     then
-        REPO=enterprise-operator
+        REPO=eos-operator
     fi
 
     if [ "$REPO" == "automation" ]
@@ -2523,9 +2523,9 @@ function convert_short_name_to_proper_name() {
         ACCOUNT=miniohq
     fi
 
-    if [ "$REPO" == "enterprise-operator" ]
+    if [ "$REPO" == "eos-operator" ]
     then
-        REPO=enterprise-operator
+        REPO=eos-operator
         BRANCH=master
         ACCOUNT=miniohq
     fi
@@ -2616,11 +2616,11 @@ function update() {
     fi
 
     # https://stackoverflow.com/questions/35281797/missing-in-bash-script
-    if [[ "$REPO" == "enterprise-operator" || "$REPO" == "enterprise-operator" ]]
+    if [[ "$REPO" == "eos-operator" || "$REPO" == "eos-operator" ]]
     then
-        echo "REPO is enterprise-operator, meaning is a PR for enterprise-operator repo"
-        echo "Hence proper name is required not other but enterprise-operator."
-        REPO=enterprise-operator
+        echo "REPO is eos-operator, meaning is a PR for eos-operator repo"
+        echo "Hence proper name is required not other but eos-operator."
+        REPO=eos-operator
     fi
 
     # https://stackoverflow.com/questions/35281797/missing-in-bash-script
